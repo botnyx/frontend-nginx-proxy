@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  frontend-nginx-proxy:
-    container_name: frontend-nginx-proxy
+  system-frontend-proxy:
+    container_name: system-frontend-proxy
     restart: always
     image: jwilder/nginx-proxy
     ports:
@@ -15,8 +15,8 @@ services:
       - frontend-proxy-html:/usr/share/nginx/html
     environment:
       - DEFAULT_HOST=#YOUR#HOSTNAME#
-  frontend-letsencrypt-nginx-proxy-companion:
-    container_name: frontend-letsencrypt-nginx-proxy-companion
+  system-frontend-proxy-companion:
+    container_name: system-frontend--proxy-companion
     restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
