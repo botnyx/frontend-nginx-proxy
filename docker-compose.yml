@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  frontend-nginx-proxy:
+    container_name: frontend-nginx-proxy
+    restart: always
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - frontend-proxy-sslcerts:/etc/nginx/certs
+      - frontend-proxy-vhosts:/etc/nginx/vhost.d
+      - frontend-proxy-html:/usr/share/nginx/html
+    environment:
+      - DEFAULT_HOST=#YOUR#HOSTNAME#
+  frontend-letsencrypt-nginx-proxy-companion:
+    container_name: letsencrypt-nginx-proxy-companion
+    restart: always
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - frontend-proxy-sslcerts:/etc/nginx/certs
+      - frontend-proxy-vhosts:/etc/nginx/vhost.d
+      - frontend-proxy-html:/usr/share/nginx/html
+    environment:
+      - NGINX_PROXY_CONTAINER=frontend-nginx-proxy
+volumes:
+    frontend-proxy-sslcerts:
+       external: true
+    frontend-proxy-vhosts
+       external: true
+    frontend-proxy-html
+       external: true    
+
+networks:
+    default:
+       external:
+         name: frontend-proxynet
+
