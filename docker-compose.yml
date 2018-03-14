@@ -16,7 +16,7 @@ services:
     environment:
       - DEFAULT_HOST=#YOUR#HOSTNAME#
   frontend-letsencrypt-nginx-proxy-companion:
-    container_name: letsencrypt-nginx-proxy-companion
+    container_name: frontend-letsencrypt-nginx-proxy-companion
     restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
@@ -29,9 +29,9 @@ services:
 volumes:
     frontend-proxy-sslcerts:
        external: true
-    frontend-proxy-vhosts
+    frontend-proxy-vhosts:
        external: true
-    frontend-proxy-html
+    frontend-proxy-html:
        external: true    
 
 networks:
